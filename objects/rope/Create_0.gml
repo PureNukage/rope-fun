@@ -20,7 +20,7 @@ function create_vertex_struct(_x, _y) constructor {
 
 function create_vertex(x, y) {
 	var vertex = new create_vertex_struct(x, y)
-	ds_list_insert(vertices, 0, vertex)
+	ds_list_add(vertices, vertex)
 	verticeCount++
 }
 

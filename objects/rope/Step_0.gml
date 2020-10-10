@@ -1,15 +1,15 @@
 //	Loop through vertices
 for(var i=0;i<verticeCount;i++) {
-	var previousVertex = vertices[| i-1]
+	var previousVertex = vertices[| i+1]
 	var vertex = vertices[| i]	
-	var nextVertex = vertices[| i+1]
+	var nextVertex = vertices[| i-1]
 	
 	
-	//	Less than last vertice
-	if i < verticeCount-1 {
+	//	Vertice other than the first
+	if i > 0 {
 		
 		//	Create a new node if we're far enough away from the anchor
-		if i == 0 and point_distance(vertex.x,vertex.y, x,y) >= ropeLengthMin {
+		if i == verticeCount-1 and point_distance(vertex.x,vertex.y, x,y) >= ropeLengthMin {
 			create_vertex(x, y)	
 		}
 		
@@ -75,8 +75,8 @@ for(var i=0;i<verticeCount;i++) {
 		nextVertex.y += offY
 		vertex.y -= offY
 		
-	//	The last vertex
-	} else if i == verticeCount-1 {
+	//	The player vertice
+	} else if i == 0 {
 		vertex.x = ball.x
 		vertex.y = ball.y
 	}
