@@ -1,6 +1,7 @@
 depth = -1
 
 grid = mp_grid_create(0,0,room_width,room_height,1,1)
+mp_grid_add_instances(grid, collision, true)
 
 Rope = path_add()
 path_set_closed(Rope, false)

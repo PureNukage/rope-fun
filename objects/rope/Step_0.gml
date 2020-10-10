@@ -1,12 +1,12 @@
 //	Loop through nodes except first and last
 var length = 0
-var collisionPath = path_add()
+//var collisionPath = path_add()
 for(var i=1;i<nodeCount-1;i++) {
 	var previousNode = nodes[| i-1]
 	var node = nodes[| i]
 	var nextNode = nodes[| i+1]
 	
-	var Lerp = 0.2
+	var Lerp = 0.2 //* i/nodeCount
 	
 	//	distance to the next node
 	var distanceToNextNode = point_distance(node.x,node.y, nextNode.x,nextNode.y)
@@ -14,10 +14,37 @@ for(var i=1;i<nodeCount-1;i++) {
 	
 	//	This node isn't close enough to the next node
 	if distanceToNextNode > ropeLengthMin {
-		var newX = lerp(node.x, nextNode.x, Lerp)
-		var newY = lerp(node.y, nextNode.y, Lerp)
-		node.x = lerp(node.x, nextNode.x, Lerp)
-		node.y = lerp(node.y, nextNode.y, Lerp)
+		var nodeDirection = point_direction(node.x,node.y, nextNode.x,nextNode.y)
+		var newX = node.x
+		var newY = node.y
+		var NewX = lerp(node.x, nextNode.x, Lerp)
+		var NewY = lerp(node.y, nextNode.y, Lerp)
+		var XX = NewX - node.x
+		var YY = NewY - node.y
+		for(var X=0;X<abs(XX);X++) {
+			if !collision_line(newX + sign(XX), newY, nextNode.x,nextNode.y, collision, false, true)
+			and !collision_line(newX + sign(XX), newY, previousNode.x,previousNode.y, collision, false, true) {
+				newX += sign(XX)	
+			}
+			else {
+				show_debug_message(string(delta_time) + " " + string(i))
+				if !collision_point(newX, newY + sign(XX), collision, false, true) newY += sign(XX)
+			}
+		}
+		for(var Y=0;Y<abs(YY);Y++) {
+			if !collision_line(newX,newY + sign(YY), nextNode.x,nextNode.y, collision, false, true)
+			and !collision_line(newX,newY + sign(YY), previousNode.x,previousNode.y, collision, false, true) {
+				newY += sign(YY)
+			} 
+			else {
+				show_debug_message(string(delta_time) + " " + string(i))	
+				if !collision_point(newX + sign(YY), newY, collision, false, true) newX += sign(YY)
+			}
+		}
+		//node.x = lerp(node.x, nextNode.x, Lerp)
+		//node.y = lerp(node.y, nextNode.y, Lerp)
+		node.x = newX
+		node.y = newY
 		nodes[| i] = node
 	}
 	
