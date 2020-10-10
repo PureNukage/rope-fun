@@ -6,10 +6,8 @@ mp_grid_add_instances(grid, collision, true)
 ropeLengthMin = 25
 
 vertices = ds_list_create()
-stick = ds_list_create()
 
 verticeCount = 0
-stickCount = 0
 
 function create_vertex_struct(_x, _y) constructor {
 	x = _x
@@ -30,7 +28,7 @@ function update_vertices(vertex, nextVertex) {
 	var pY = vertex.y
 	var vX = pX - vertex.xOld
 	var vY = pY - vertex.yOld
-	var drag = 0.90
+	var drag = 0.7
 	var fric = 0.5
 		
 	//	x movements
@@ -87,6 +85,7 @@ function collision_check_stick(vertex, nextVertex) {
 	var ID = collision_line(vertex.x, vertex.y, nextVertex.x, nextVertex.y, collision,false,false)
 	if ID
     {
+		var attempts = 0
         while collision_line(vertex.x, vertex.y, nextVertex.x, nextVertex.y, collision,false,false)
         {
 			var X = sign(vertex.x - ID.centerX)
@@ -98,6 +97,10 @@ function collision_check_stick(vertex, nextVertex) {
 			var Y = sign(nextVertex.y - ID.centerY)
 			nextVertex.x += X
             nextVertex.y += Y
+			attempts++
+			if attempts >= 100 {
+				exit	
+			}
         }
     }
 }
