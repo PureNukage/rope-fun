@@ -3,7 +3,7 @@ depth = -1
 grid = mp_grid_create(0,0,room_width,room_height,1,1)
 mp_grid_add_instances(grid, collision, true)
 
-ropeLengthMin = 50
+ropeLengthMin = 25
 
 vertices = ds_list_create()
 stick = ds_list_create()
@@ -84,16 +84,20 @@ function update_sticks(vertex, nextVertex) {
 
 function collision_check_stick(vertex, nextVertex) {
 	//	Collision checking the stick
-	if collision_line(vertex.x, vertex.y, nextVertex.x, nextVertex.y, collision,false,false)
+	var ID = collision_line(vertex.x, vertex.y, nextVertex.x, nextVertex.y, collision,false,false)
+	if ID
     {
         while collision_line(vertex.x, vertex.y, nextVertex.x, nextVertex.y, collision,false,false)
         {
-			//	Find direction from center of collision to this vertex
-			var ID = collision_line(vertex.x, vertex.y, nextVertex.x, nextVertex.y, collision,false,false)
-            vertex.x += 1
-            vertex.y += 1
-            nextVertex.x += 1
-            nextVertex.y += 1
+			var X = sign(vertex.x - ID.centerX)
+			var Y = sign(vertex.y - ID.centerY)
+			vertex.x += X
+            vertex.y += Y
+			
+			var X = sign(nextVertex.x - ID.centerX)
+			var Y = sign(nextVertex.y - ID.centerY)
+			nextVertex.x += X
+            nextVertex.y += Y
         }
     }
 }

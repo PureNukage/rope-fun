@@ -21,7 +21,8 @@ for(var i=0;i<verticeCount;i++) {
 		
 		update_vertices(vertex, nextVertex)
 		
-		for(var j=0;j<5;j++) {
+		var jitterFrames = 10
+		for(var j=0;j<jitterFrames;j++) {
 		
 			update_sticks(vertex, nextVertex)
 		
