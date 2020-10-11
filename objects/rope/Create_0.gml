@@ -1,13 +1,22 @@
 depth = -1
 
+keyUp = keyboard_check(vk_up)
+keyDown = keyboard_check(vk_down)
+
 grid = mp_grid_create(0,0,room_width,room_height,1,1)
 mp_grid_add_instances(grid, collision, true)
 
+ropeTension = 0
+ropeLength = 0
 ropeLengthMin = 25
+ropeMaxSegments = 40
+ropeLengthMax = ropeLengthMin * ropeMaxSegments
 
 vertices = ds_list_create()
 
 verticeCount = 0
+
+reel = 0
 
 function create_vertex_struct(_x, _y) constructor {
 	x = _x
@@ -20,6 +29,11 @@ function create_vertex(x, y) {
 	var vertex = new create_vertex_struct(x, y)
 	ds_list_add(vertices, vertex)
 	verticeCount++
+}
+	
+function delete_vertex(index) {
+	ds_list_delete(vertices, index)
+	verticeCount--
 }
 
 function update_vertices(vertex, nextVertex) {
@@ -36,14 +50,14 @@ function update_vertices(vertex, nextVertex) {
 	pX += vX * drag
 		
 	//	Keep the point in the room
-	if pX > room_width {
-		pX = room_width
-		vertex.xOld = vertex.x + (vX * fric)
-	}
-	else if pX < 0 {
-		pX = 0
-		vertex.xOld = vertex.x + (vX * fric)
-	}
+	//if pX > room_width {
+	//	pX = room_width
+	//	vertex.xOld = vertex.x + (vX * fric)
+	//}
+	//else if pX < 0 {
+	//	pX = 0
+	//	vertex.xOld = vertex.x + (vX * fric)
+	//}
 		
 	vertex.x = pX
 		
@@ -51,13 +65,14 @@ function update_vertices(vertex, nextVertex) {
 	vertex.yOld = vertex.y
 	pY += vY * drag
 		
-	if pY > room_height {
-		pY = room_height
-		vertex.yOld = vertex.y + (vY * fric)
+	if pY > room_height or pY < 0 {
+		//delete_vertex()
+		//pY = room_height
+		//vertex.yOld = vertex.y + (vY * fric)
 	}
 	else if pY < 0 {
-		pY = 0 
-		vertex.yOld = vertex.y + (vY * fric)
+		//pY = 0 
+		//vertex.yOld = vertex.y + (vY * fric)
 	}
 		
 	vertex.y = pY	

@@ -26,3 +26,7 @@ for(var i=0;i<verticeCount;i++) {
 path_add_point(path, x,y, 100)
 draw_path(path, x,y, true)
 path_delete(path)
+
+//	Draw text
+draw_set_color(c_black)
+draw_text(15,15,"ropeLength: "+string(ropeLength))
