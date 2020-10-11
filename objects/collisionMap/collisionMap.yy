@@ -1,7 +1,7 @@
 {
   "spriteId": {
-    "name": "s_ball",
-    "path": "sprites/s_ball/s_ball.yy",
+    "name": "s_collision3",
+    "path": "sprites/s_collision3/s_collision3.yy",
   },
   "solid": false,
   "visible": true,
@@ -21,9 +21,7 @@
   "physicsKinematic": false,
   "physicsShapePoints": [],
   "eventList": [
-    {"isDnD":false,"eventNum":0,"eventType":3,"collisionObjectId":null,"parent":{"name":"ball","path":"objects/ball/ball.yy",},"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMEvent",},
-    {"isDnD":false,"eventNum":0,"eventType":0,"collisionObjectId":null,"parent":{"name":"ball","path":"objects/ball/ball.yy",},"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMEvent",},
-    {"isDnD":false,"eventNum":0,"eventType":8,"collisionObjectId":null,"parent":{"name":"ball","path":"objects/ball/ball.yy",},"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMEvent",},
+    {"isDnD":false,"eventNum":0,"eventType":0,"collisionObjectId":null,"parent":{"name":"collisionMap","path":"objects/collisionMap/collisionMap.yy",},"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMEvent",},
   ],
   "properties": [],
   "overriddenProperties": [],
@@ -32,7 +30,7 @@
     "path": "folders/Objects.yy",
   },
   "resourceVersion": "1.0",
-  "name": "ball",
+  "name": "collisionMap",
   "tags": [],
   "resourceType": "GMObject",
 }

@@ -29,6 +29,12 @@ for(var Y=0;Y<abs(yy);Y++) {
 xx = 0
 yy = 0
 
+if place_meeting(x,y,collisionMap) {
+	var ID = instance_place(x,y,collisionMap)
+	z = ID.z	
+}
+else z = 0
+
 if point_in_circle(mouse_x,mouse_y, x,y, 16) and mouse_check_button_pressed(mb_left) {
 	attachedToMouse = true
 }

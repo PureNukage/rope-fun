@@ -39,21 +39,6 @@ for(var j=0;j<jitterFrames;j++) {
 				if point_distance(vertex.x,vertex.y, x,y) >= ropeLengthMin {
 					create_vertex(x, y)	
 				}
-				else {
-					////	Slowly get reeled back in
-					//if point_distance(vertex.x,vertex.y, x,y) > (ropeLengthMin - reelAmount) {
-					//	vertex.x += lengthdir_x(min(reelAmount, point_distance(vertex.x,vertex.y, x,y)), point_direction(vertex.x,vertex.y, x,y))
-					//	vertex.y += lengthdir_y(min(reelAmount, point_distance(vertex.x,vertex.y, x,y)), point_direction(vertex.x,vertex.y, x,y))
-					//}
-					//else if reel <= -1 {
-					//	delete_vertex(i)
-						
-					//	//	Adjust the next final node
-					//	var newFinalNode = vertices[| verticeCount - 1]
-					//	newFinalNode.x += lengthdir_x(reelAmount, point_direction(newFinalNode.x,newFinalNode.y, x,y))
-					//	newFinalNode.y += lengthdir_y(reelAmount, point_direction(newFinalNode.x,newFinalNode.y, x,y)) 
-					//}
-				}
 				
 				if y < 0 {
 					delete_vertex(i)
@@ -71,12 +56,22 @@ for(var j=0;j<jitterFrames;j++) {
 			
 			//}s
 			
+			//	Check z collision
+			var ID = collision_point(vertex.x,vertex.y, collisionMap, true,true)
+			if ID and vertex.y < (ID.bbox_top + ID.width + 16) {
+				if nextVertex.z >= ID.z vertex.z = ID.z
+			}
+			else {
+				vertex.z = 0	
+			}
+			
 			length += point_distance(vertex.x,vertex.y, nextVertex.x,nextVertex.y)
 		
 		//	The player vertice
 		} else if i == 0 {
 			vertex.x = ball.x
 			vertex.y = ball.y
+			vertex.z = ball.z + 16
 		}
 	}
 	//length += point_distance(vertices[| 0].x,vertices[| 0].y, vertices[])

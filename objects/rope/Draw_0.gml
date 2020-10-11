@@ -21,7 +21,7 @@ var path = path_add()
 path_set_kind(path, 1)
 path_set_closed(path, false)
 for(var i=0;i<verticeCount;i++) {
-	path_add_point(path, vertices[| i].x,vertices[| i].y, 100)	
+	path_add_point(path, vertices[| i].x,vertices[| i].y - vertices[| i].z, 100)	
 }
 path_add_point(path, x,y, 100)
 draw_path(path, x,y, true)

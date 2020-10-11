@@ -21,6 +21,7 @@ reel = 0
 function create_vertex_struct(_x, _y) constructor {
 	x = _x
 	y = _y
+	z = 0
 	xOld = _x + irandom_range(-2,2)
 	yOld = _y + irandom_range(-2,2)
 }
@@ -118,6 +119,36 @@ function collision_check_stick(vertex, nextVertex) {
 			}
         }
     }
+	
+	//	Collision checking the stick
+	var ID = collision_line(vertex.x, vertex.y, nextVertex.x, nextVertex.y, collisionMap,false,false)
+	if ID
+    {
+		var attempts = 0
+		//	If we're behind this collisionMap
+		if vertex.z < ID.z and vertex.y < ID.bbox_bottom - ID.width {
+			exit	
+		}
+		else if vertex.z < ID.z {
+	        while collision_line(vertex.x, vertex.y, nextVertex.x, nextVertex.y, collisionMap,false,false)
+	        {
+				var X = sign(vertex.x - ID.centerX)
+				var Y = sign(vertex.y - ID.centerY)
+				vertex.x += X
+	            vertex.y += Y
+			
+				var X = sign(nextVertex.x - ID.centerX)
+				var Y = sign(nextVertex.y - ID.centerY)
+				nextVertex.x += X
+	            nextVertex.y += Y
+				attempts++
+				if attempts >= 100 {
+					exit	
+				}
+	        }
+		}
+    }
+	
 }
 
 create_vertex(x, y)
